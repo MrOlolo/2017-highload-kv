@@ -50,13 +50,13 @@ public class MyService implements KVService {
                                     httpExchange.getResponseBody().write(getValue);
 
                                 } catch (NoSuchElementException | IOException e) {
-                                    httpExchange.sendResponseHeaders(404,0);
+                                    httpExchange.sendResponseHeaders(404, 0);
                                 }
                                 break;
 
                             case "DELETE":
                                 dao.delete(id);
-                                httpExchange.sendResponseHeaders(202,0);
+                                httpExchange.sendResponseHeaders(202, 0);
                                 break;
 
                             case "PUT":
@@ -65,15 +65,15 @@ public class MyService implements KVService {
                                 byte[] buffer = new byte[4096];
                                 int len;
                                 while((len = is.read(buffer))>0) {
-                                    os.write(buffer,0, len);
+                                    os.write(buffer, 0, len);
                                 }
                                 final byte[] putValue = os.toByteArray();
                                 dao.upsert(id, putValue);
-                                httpExchange.sendResponseHeaders(201,0);
+                                httpExchange.sendResponseHeaders(201, 0);
                                 break;
 
                             default:
-                                httpExchange.sendResponseHeaders(405,0);
+                                httpExchange.sendResponseHeaders(405, 0);
                                 break;
                         }
                     } catch (Exception e) {
