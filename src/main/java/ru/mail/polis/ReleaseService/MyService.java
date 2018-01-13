@@ -37,14 +37,14 @@ public class MyService implements KVService {
                 httpExchange -> {
                     try {
                         final String id = extractId(httpExchange.getRequestURI().getQuery());
-                        if (id.length()==0){
+                        if ("".equals(id)) {
                             httpExchange.sendResponseHeaders(400, 0);
                             httpExchange.close();
                             return;
                         }
                         switch (httpExchange.getRequestMethod()) {
                             case "GET":
-                                try{
+                                try {
                                     final byte[] getValue = dao.get(id);
                                     httpExchange.sendResponseHeaders(200, getValue.length);
                                     httpExchange.getResponseBody().write(getValue);
@@ -64,7 +64,7 @@ public class MyService implements KVService {
                                 InputStream is = httpExchange.getRequestBody();
                                 byte[] buffer = new byte[4096];
                                 int len;
-                                while((len = is.read(buffer))>0){
+                                while((len = is.read(buffer))>0) {
                                     os.write(buffer,0, len);
                                 }
                                 final byte[] putValue = os.toByteArray();
@@ -76,7 +76,7 @@ public class MyService implements KVService {
                                 httpExchange.sendResponseHeaders(405,0);
                                 break;
                         }
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                         httpExchange.sendResponseHeaders(404, 0);
                     }
@@ -86,8 +86,8 @@ public class MyService implements KVService {
 
 
     @NotNull
-    private static String extractId(@NotNull final String query){
-        if (!query.startsWith(PREFIX)){
+    private static String extractId(@NotNull final String query) {
+        if (!query.startsWith(PREFIX)) {
             throw new IllegalArgumentException("Bad id");
         }
         return query.substring(PREFIX.length());

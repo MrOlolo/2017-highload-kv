@@ -28,7 +28,7 @@ public class MyFileDAO implements MyDAO {
     @NotNull
     @Override
     public byte[] get(@NotNull final String key) throws NoSuchElementException, IllegalArgumentException, IOException {
-        if(!(Files.exists(Paths.get(dir.toString(), key)))){
+        if(!(Files.exists(Paths.get(dir.toString(), key)))) {
             throw new NoSuchElementException();
         }
         return Files.readAllBytes(Paths.get(dir.toString(), key));
@@ -36,7 +36,7 @@ public class MyFileDAO implements MyDAO {
 
     @Override
     public void upsert(@NotNull final String key, @NotNull byte[] value) throws IllegalArgumentException, IOException {
-        try(OutputStream os = new FileOutputStream(getFile(key))){
+        try(OutputStream os = new FileOutputStream(getFile(key))) {
             os.write(value);
         }
     }
