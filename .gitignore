@@ -13,5 +13,6 @@
 !README.md
 !settings.gradle
 !LOADTEST.md
+!*.lua
 # ...even if they are in subdirectories
 !*/

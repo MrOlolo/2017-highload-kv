@@ -1,10 +1,10 @@
-# 3 этап - тестирование с Нагрузкой
-Нагрузочное тестирование было проведено с помощью wrk
-## До оптимизации
+# 3 СЌС‚Р°Рї - С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ СЃ РќР°РіСЂСѓР·РєРѕР№
+РќР°РіСЂСѓР·РѕС‡РЅРѕРµ С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ Р±С‹Р»Рѕ РїСЂРѕРІРµРґРµРЅРѕ СЃ РїРѕРјРѕС‰СЊСЋ wrk
+## Р”Рѕ РѕРїС‚РёРјРёР·Р°С†РёРё
 
-### PUT без перезаписи
-#### 1 поток, 1 соединение
-Длительность - 1 минута
+### PUT Р±РµР· РїРµСЂРµР·Р°РїРёСЃРё
+##### 1 РїРѕС‚РѕРє, 1 СЃРѕРµРґРёРЅРµРЅРёРµ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t1 -c1 -d1m -s put.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -21,8 +21,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:    188.82
 Transfer/sec:     17.33KB
 ```
-#### 2 потока, 2 соединения
-Длительность - 1 минута
+##### 2 РїРѕС‚РѕРєР°, 2 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t2 -c2 -d1m -s put.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -39,8 +39,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:    401.95
 Transfer/sec:     36.90KB
 ```
-#### 4 потока, 4 соединения
-Длительность - 5 минут
+##### 4 РїРѕС‚РѕРєР°, 4 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 5 РјРёРЅСѓС‚
 ```
  wrk --latency -t4 -c4 -d5m -s put.lua http://localhost:8080
 Running 5m test @ http://localhost:8080
@@ -57,9 +57,9 @@ Running 5m test @ http://localhost:8080
 Requests/sec:    592.32
 Transfer/sec:     54.37KB
 ```
-### GET без повторов
-#### 1 поток, 1 соединение
-Длительность - 1 минута
+### GET Р±РµР· РїРѕРІС‚РѕСЂРѕРІ
+##### 1 РїРѕС‚РѕРє, 1 СЃРѕРµРґРёРЅРµРЅРёРµ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t1 -c1 -d1m -s get.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -77,8 +77,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:   1755.96
 Transfer/sec:      3.06MB
 ```
-#### 2 потока, 2 соединения
-Длительность - 1 минута
+##### 2 РїРѕС‚РѕРєР°, 2 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
 $ wrk --latency -t2 -c2 -d1m -s get.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -96,8 +96,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:   3371.95
 Transfer/sec:      6.12MB
 ```
-#### 4 потока, 4 соединения
-Длительность - 1 минута
+##### 4 РїРѕС‚РѕРєР°, 4 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t4 -c4 -d1m -s get.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -115,9 +115,9 @@ Running 1m test @ http://localhost:8080
 Requests/sec:   3908.44
 Transfer/sec:     11.97MB
 ```
-### PUT c перезаписью
-#### 1 поток, 1 соединение
-Длительность - 1 минута
+### PUT c РїРµСЂРµР·Р°РїРёСЃСЊСЋ
+##### 1 РїРѕС‚РѕРє, 1 СЃРѕРµРґРёРЅРµРЅРёРµ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t1 -c1 -d1m -s put_rewr.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -134,8 +134,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:    208.65
 Transfer/sec:     19.15KB
 ```
-#### 2 потока, 2 соединения
-Длительность - 1 минута
+##### 2 РїРѕС‚РѕРєР°, 2 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t2 -c2 -d1m -s put_rewr.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -152,8 +152,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:    432.84
 Transfer/sec:     39.73KB
 ```
-#### 4 потока, 4 соединения
-Длительность - 5 минут
+##### 4 РїРѕС‚РѕРєР°, 4 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 5 РјРёРЅСѓС‚
 ```
  wrk --latency -t4 -c4 -d5m -s put_rewr.lua http://localhost:8080
 Running 5m test @ http://localhost:8080
@@ -170,9 +170,9 @@ Running 5m test @ http://localhost:8080
 Requests/sec:    716.15
 Transfer/sec:     65.74KB
 ```
-### GET с повторами
-#### 1 поток, 1 соединение
-Длительность - 1 минута
+### GET СЃ РїРѕРІС‚РѕСЂР°РјРё
+##### 1 РїРѕС‚РѕРє, 1 СЃРѕРµРґРёРЅРµРЅРёРµ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t1 -c1 -d1m -s get_repeat.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -189,8 +189,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:   3815.93
 Transfer/sec:     15.20MB
 ```
-#### 2 потока, 2 соединения
-Длительность - 1 минута
+##### 2 РїРѕС‚РѕРєР°, 2 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t2 -c2 -d1m -s get_repeat.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -207,8 +207,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:   3997.87
 Transfer/sec:     15.93MB
 ```
-#### 4 потока, 4 соединения
-Длительность - 1 минута
+##### 4 РїРѕС‚РѕРєР°, 4 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t4 -c4 -d1m -s get_repeat.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -225,9 +225,9 @@ Running 1m test @ http://localhost:8080
 Requests/sec:   3226.89
 Transfer/sec:     12.86MB
 ```
-### Смесь PUT/GET 50/50 без перезаписи
-#### 1 поток, 1 соединение
-Длительность - 1 минута
+### РЎРјРµСЃСЊ PUT/GET 50/50 Р±РµР· РїРµСЂРµР·Р°РїРёСЃРё
+##### 1 РїРѕС‚РѕРє, 1 СЃРѕРµРґРёРЅРµРЅРёРµ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t1 -c1 -d1m -s put_get.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -244,8 +244,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:    370.43
 Transfer/sec:    772.73KB
 ```
-#### 2 потока, 2 соединения
-Длительность - 1 минута
+##### 2 РїРѕС‚РѕРєР°, 2 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t2 -c2 -d1m -s put_get.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -262,8 +262,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:    625.62
 Transfer/sec:      1.27MB
 ```
-#### 4 потока, 4 соединения
-Длительность - 5 минут
+##### 4 РїРѕС‚РѕРєР°, 4 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 5 РјРёРЅСѓС‚
 ```
  wrk --latency -t4 -c4 -d5m -s put_get.lua http://localhost:8080
 Running 5m test @ http://localhost:8080
@@ -280,9 +280,9 @@ Running 5m test @ http://localhost:8080
 Requests/sec:   1003.26
 Transfer/sec:      2.04MB
 ```
-### Смесь PUT/GET 50/50 с перезаписью
-#### 1 поток, 1 соединение
-Длительность - 1 минута
+### РЎРјРµСЃСЊ PUT/GET 50/50 СЃ РїРµСЂРµР·Р°РїРёСЃСЊСЋ
+##### 1 РїРѕС‚РѕРє, 1 СЃРѕРµРґРёРЅРµРЅРёРµ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t1 -c1 -d1m -s put_get_repeat.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -299,8 +299,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:    390.15
 Transfer/sec:    813.86KB
 ```
-#### 2 потока, 2 соединения
-Длительность - 1 минута
+##### 2 РїРѕС‚РѕРєР°, 2 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 1 РјРёРЅСѓС‚Р°
 ```
  wrk --latency -t2 -c2 -d1m -s put_get_repeat.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
@@ -317,8 +317,8 @@ Running 1m test @ http://localhost:8080
 Requests/sec:    663.08
 Transfer/sec:      1.35MB
 ```
-#### 4 потока, 4 соединения
-Длительность - 5 минут
+##### 4 РїРѕС‚РѕРєР°, 4 СЃРѕРµРґРёРЅРµРЅРёСЏ
+Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ - 5 РјРёРЅСѓС‚
 ```
  wrk --latency -t4 -c4 -d5m -s put_get_repeat.lua http://localhost:8080
 Running 5m test @ http://localhost:8080
