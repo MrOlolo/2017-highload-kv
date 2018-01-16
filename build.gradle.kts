@@ -35,5 +35,5 @@ application {
     mainClassName = "ru.mail.polis.Server"
 
     // And limit Xmx
-    applicationDefaultJvmArgs = listOf("-Xmx1g")
+    applicationDefaultJvmArgs = listOf("-Xmx1g", "-Xverify:none") //без "-Xverify:none"  в jvisualvm выдавало ошибку
 }

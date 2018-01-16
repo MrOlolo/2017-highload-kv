@@ -79,8 +79,9 @@ public class MyService implements KVService {
                     } catch (Exception e) {
                         e.printStackTrace();
                         httpExchange.sendResponseHeaders(404, 0);
+                    } finally {
+                        httpExchange.close();
                     }
-                    httpExchange.close();
                 });
     }
 
