@@ -17,15 +17,24 @@ public class MyService implements KVService {
     @NotNull
     private final HttpServer server;
 
-    private static final String response = "ONLINE";
+    private static final String RESPONSE = "ONLINE";
+    private static final String PREFIX = "id=";
+
+    private static final int PREFIX_LENGTH = 3;
+    private static final int HTTP_OK = 200;
+    private static final int HTTP_CREATED = 201;
+    private static final int HTTP_ACCEPTED = 202;
+    private static final int HTTP_BAD_REQUEST = 400;
+    private static final int HTTP_NOT_FOUND = 404;
+    private static final int HTTP_METHOD_NOT_ALLOWED = 405;
 
     public MyService(int port, @NotNull final MyDAO dao) throws IOException {
         this.server = HttpServer.create(new InetSocketAddress(port), 0);
 
         this.server.createContext("/v0/status",
                 httpExchange -> {
-                    httpExchange.sendResponseHeaders(200, response.length());
-                    httpExchange.getResponseBody().write(response.getBytes());
+                    httpExchange.sendResponseHeaders(HTTP_OK, RESPONSE.length());
+                    httpExchange.getResponseBody().write(RESPONSE.getBytes());
                     httpExchange.close();
                 });
 
@@ -33,15 +42,15 @@ public class MyService implements KVService {
                 httpExchange -> {
                     try {
                         final String query = httpExchange.getRequestURI().getQuery();
-                        if (!query.startsWith("id=")) {
-                            httpExchange.sendResponseHeaders(400, 0);
+                        if (!query.startsWith(PREFIX)) {
+                            httpExchange.sendResponseHeaders(HTTP_BAD_REQUEST, 0);
                             httpExchange.close();
                             return;
                         }
 
-                        final String id = query.substring(3);
+                        final String id = query.substring(PREFIX_LENGTH);
                         if ("".equals(id)) {
-                            httpExchange.sendResponseHeaders(400, 0);
+                            httpExchange.sendResponseHeaders(HTTP_BAD_REQUEST, 0);
                             httpExchange.close();
                             return;
                         }
@@ -50,17 +59,17 @@ public class MyService implements KVService {
                             case "GET":
                                 try {
                                     final byte[] getValue = dao.get(id);
-                                    httpExchange.sendResponseHeaders(200, getValue.length);
+                                    httpExchange.sendResponseHeaders(HTTP_OK, getValue.length);
                                     httpExchange.getResponseBody().write(getValue);
 
                                 } catch (NoSuchElementException | IOException e) {
-                                    httpExchange.sendResponseHeaders(404, 0);
+                                    httpExchange.sendResponseHeaders(HTTP_NOT_FOUND, 0);
                                 }
                                 break;
 
                             case "DELETE":
                                 dao.delete(id);
-                                httpExchange.sendResponseHeaders(202, 0);
+                                httpExchange.sendResponseHeaders(HTTP_ACCEPTED, 0);
                                 break;
 
                             case "PUT":
@@ -73,17 +82,17 @@ public class MyService implements KVService {
                                 }
                                 final byte[] putValue = os.toByteArray();
                                 dao.upsert(id, putValue);
-                                httpExchange.sendResponseHeaders(201, 0);
+                                httpExchange.sendResponseHeaders(HTTP_CREATED, 0);
                                 break;
 
                             default:
-                                httpExchange.sendResponseHeaders(405, 0);
+                                httpExchange.sendResponseHeaders(HTTP_METHOD_NOT_ALLOWED, 0);
                                 break;
                         }
 
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        httpExchange.sendResponseHeaders(404, 0);
+                       // e.printStackTrace();
+                        httpExchange.sendResponseHeaders(HTTP_NOT_FOUND, 0);
 
                     } finally {
                         httpExchange.close();

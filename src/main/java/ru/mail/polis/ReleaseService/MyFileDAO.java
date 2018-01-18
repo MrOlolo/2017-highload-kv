@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
 public class MyFileDAO implements MyDAO {
     @NotNull
     private final File dir;
+
     private final Map<String, byte[]> cache;
 
     public MyFileDAO(@NotNull final File dir) {
