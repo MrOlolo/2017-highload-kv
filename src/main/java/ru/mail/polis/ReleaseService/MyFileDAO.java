@@ -28,7 +28,7 @@ public class MyFileDAO implements MyDAO {
     @NotNull
     @Override
     public byte[] get(@NotNull final String key) throws NoSuchElementException, IllegalArgumentException, IOException {
-        if (cache.containsKey(key)) {
+        if (cache.containsKey(key)){
             return cache.get(key);
         }
 
@@ -38,7 +38,7 @@ public class MyFileDAO implements MyDAO {
         }
 
         final byte[] value = Files.readAllBytes(path);
-        if(cache.size() == 2000) {
+        if(cache.size() == 2000){
             cache.remove(cache.keySet().iterator().next());
         }
         cache.put(key, value);
