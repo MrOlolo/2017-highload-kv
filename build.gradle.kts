@@ -1,4 +1,4 @@
-// See https://gradle.org and https://github.com/gradle/kotlin-dsl
+﻿// See https://gradle.org and https://github.com/gradle/kotlin-dsl
 
 // Apply the java plugin to add support for Java
 plugins {
@@ -35,5 +35,5 @@ application {
     mainClassName = "ru.mail.polis.Server"
 
     // And limit Xmx
-    applicationDefaultJvmArgs = listOf("-Xmx1g", "-Xverify:none") //без "-Xverify:none"  в jvisualvm выдавало ошибку
+    applicationDefaultJvmArgs = listOf("-Xmx1g") //без "-Xverify:none"  в jvisualvm выдавало ошибку
 }
