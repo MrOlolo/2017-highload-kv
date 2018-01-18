@@ -16,18 +16,14 @@ import java.util.NoSuchElementException;
 public class MyService implements KVService {
     @NotNull
     private final HttpServer server;
-    @NotNull
-    private final MyDAO dao;
 
-    private static final String PREFIX  = "id=";
+    private static final String response = "ONLINE";
 
     public MyService(int port, @NotNull final MyDAO dao) throws IOException {
-        this.dao = dao;
         this.server = HttpServer.create(new InetSocketAddress(port), 0);
 
         this.server.createContext("/v0/status",
                 httpExchange -> {
-                    final String response = "ONLINE";
                     httpExchange.sendResponseHeaders(200, response.length());
                     httpExchange.getResponseBody().write(response.getBytes());
                     httpExchange.close();
@@ -36,12 +32,20 @@ public class MyService implements KVService {
         this.server.createContext("/v0/entity",
                 httpExchange -> {
                     try {
-                        final String id = extractId(httpExchange.getRequestURI().getQuery());
+                        final String query = httpExchange.getRequestURI().getQuery();
+                        if (!query.startsWith("id=")) {
+                            httpExchange.sendResponseHeaders(400, 0);
+                            httpExchange.close();
+                            return;
+                        }
+
+                        final String id = query.substring(3);
                         if ("".equals(id)) {
                             httpExchange.sendResponseHeaders(400, 0);
                             httpExchange.close();
                             return;
                         }
+
                         switch (httpExchange.getRequestMethod()) {
                             case "GET":
                                 try {
@@ -76,22 +80,15 @@ public class MyService implements KVService {
                                 httpExchange.sendResponseHeaders(405, 0);
                                 break;
                         }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         httpExchange.sendResponseHeaders(404, 0);
+
                     } finally {
                         httpExchange.close();
                     }
                 });
-    }
-
-
-    @NotNull
-    private static String extractId(@NotNull final String query) {
-        if (!query.startsWith(PREFIX)) {
-            throw new IllegalArgumentException("Bad id");
-        }
-        return query.substring(PREFIX.length());
     }
 
     @Override

@@ -1,12 +1,10 @@
 package ru.mail.polis.ReleaseService;
 
 import org.jetbrains.annotations.NotNull;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
+import java.nio.file.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
@@ -15,9 +13,11 @@ import java.util.NoSuchElementException;
 public class MyFileDAO implements MyDAO {
     @NotNull
     private final File dir;
+    private final Map<String, byte[]> cache;
 
     public MyFileDAO(@NotNull final File dir) {
         this.dir = dir;
+        cache = new HashMap<>(2000);
     }
 
     @NotNull
@@ -28,10 +28,21 @@ public class MyFileDAO implements MyDAO {
     @NotNull
     @Override
     public byte[] get(@NotNull final String key) throws NoSuchElementException, IllegalArgumentException, IOException {
-        if(!(Files.exists(Paths.get(dir.toString(), key)))) {
+        if (cache.containsKey(key)){
+            return cache.get(key);
+        }
+
+        final Path path = Paths.get(dir.toString(), key);
+        if(!(Files.exists(path))) {
             throw new NoSuchElementException();
         }
-        return Files.readAllBytes(Paths.get(dir.toString(), key));
+
+        final byte[] value = Files.readAllBytes(path);
+        if(cache.size() == 2000){
+            cache.remove(cache.keySet().iterator().next());
+        }
+        cache.put(key, value);
+        return value;
     }
 
     @Override
@@ -39,11 +50,13 @@ public class MyFileDAO implements MyDAO {
         try(OutputStream os = new FileOutputStream(getFile(key))) {
             os.write(value);
         }
+        cache.remove(key);
     }
 
     @Override
     public void delete(@NotNull final String key) throws IllegalArgumentException, IOException {
         getFile(key).delete();
+        cache.remove(key);
     }
 
 }

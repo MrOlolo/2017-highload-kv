@@ -12,7 +12,9 @@
 !LICENSE
 !README.md
 !settings.gradle
+
 !LOADTEST.md
 !*.lua
+!LOADTEST_OPTIM.md
 # ...even if they are in subdirectories
 !*/
