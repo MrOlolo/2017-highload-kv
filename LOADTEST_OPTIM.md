@@ -194,16 +194,16 @@ Transfer/sec:     67.54KB
 Running 1m test @ http://localhost:8080
   1 threads and 1 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency    96.25us   82.48us   5.75ms   98.96%
-    Req/Sec     9.73k   470.35    10.06k    95.34%
+    Latency    94.22us  191.26us  18.56ms   99.43%
+    Req/Sec    10.05k   593.97    10.30k    97.34%
   Latency Distribution
-     50%   88.00us
-     75%   91.00us
-     90%   98.00us
-     99%  183.00us
-  581405 requests in 1.00m, 2.26GB read
-Requests/sec:   9674.13
-Transfer/sec:     38.55MB
+     50%   87.00us
+     75%   88.00us
+     90%   91.00us
+     99%  165.00us
+  600714 requests in 1.00m, 2.34GB read
+Requests/sec:   9995.40
+Transfer/sec:     39.83MB
 ```
 ##### 2 потока, 2 соединения
 Длительность - 1 минута
@@ -212,16 +212,16 @@ Transfer/sec:     38.55MB
 Running 1m test @ http://localhost:8080
   2 threads and 2 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   162.91us  240.52us  15.43ms   98.80%
-    Req/Sec     6.20k   510.67     6.87k    95.25%
+    Latency   148.47us   46.30us   2.53ms   88.31%
+    Req/Sec     6.35k   302.14     6.85k    96.09%
   Latency Distribution
-     50%  155.00us
-     75%  161.00us
-     90%  175.00us
-     99%  495.00us
-  740266 requests in 1.00m, 2.88GB read
-Requests/sec:  12337.08
-Transfer/sec:     49.16MB
+     50%  153.00us
+     75%  156.00us
+     90%  162.00us
+     99%  270.00us
+  759691 requests in 1.00m, 2.96GB read
+Requests/sec:  12640.66
+Transfer/sec:     50.37MB
 ```
 ##### 4 потока, 4 соединения
 Длительность - 1 минута
@@ -230,16 +230,16 @@ Transfer/sec:     49.16MB
 Running 1m test @ http://localhost:8080
   4 threads and 4 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   160.06us  101.43us   8.30ms   95.48%
-    Req/Sec     6.05k   361.45     6.40k    94.97%
+    Latency   151.36us   70.99us   3.25ms   95.84%
+    Req/Sec     6.37k   437.14     6.70k    95.92%
   Latency Distribution
-     50%  141.00us
-     75%  168.00us
-     90%  200.00us
-     99%  504.00us
-  1446028 requests in 1.00m, 5.63GB read
-Requests/sec:  24060.68
-Transfer/sec:     95.87MB
+     50%  140.00us
+     75%  151.00us
+     90%  177.00us
+     99%  448.00us
+  1522896 requests in 1.00m, 5.93GB read
+Requests/sec:  25339.55
+Transfer/sec:    100.96MB
 ```
 ### Смесь PUT/GET 50/50 без перезаписи
 ##### 1 поток, 1 соединение
