@@ -24,8 +24,7 @@ Transfer/sec:     19.14KB
 
 Длительность - 20 минут
 ```
- wrk --latency -t1 -c1 -d20m -s put
-.lua http://localhost:8080
+ wrk --latency -t1 -c1 -d20m -s put.lua http://localhost:8080
 Running 20m test @ http://localhost:8080
   1 threads and 1 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
@@ -195,16 +194,16 @@ Transfer/sec:     67.54KB
 Running 1m test @ http://localhost:8080
   1 threads and 1 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency    97.22us  137.92us   8.93ms   99.21%
-    Req/Sec     9.84k   677.01    10.26k    91.85%
+    Latency    96.25us   82.48us   5.75ms   98.96%
+    Req/Sec     9.73k   470.35    10.06k    95.34%
   Latency Distribution
      50%   88.00us
-     75%   90.00us
-     90%   95.00us
-     99%  190.00us
-  588497 requests in 1.00m, 2.29GB read
-Requests/sec:   9792.05
-Transfer/sec:     39.02MB
+     75%   91.00us
+     90%   98.00us
+     99%  183.00us
+  581405 requests in 1.00m, 2.26GB read
+Requests/sec:   9674.13
+Transfer/sec:     38.55MB
 ```
 ##### 2 потока, 2 соединения
 Длительность - 1 минута
@@ -213,16 +212,16 @@ Transfer/sec:     39.02MB
 Running 1m test @ http://localhost:8080
   2 threads and 2 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   151.16us   69.68us   5.08ms   98.28%
-    Req/Sec     6.28k   134.63     6.90k    79.28%
+    Latency   162.91us  240.52us  15.43ms   98.80%
+    Req/Sec     6.20k   510.67     6.87k    95.25%
   Latency Distribution
      50%  155.00us
-     75%  159.00us
-     90%  166.00us
-     99%  251.00us
-  750932 requests in 1.00m, 2.92GB read
-Requests/sec:  12494.86
-Transfer/sec:     49.79MB
+     75%  161.00us
+     90%  175.00us
+     99%  495.00us
+  740266 requests in 1.00m, 2.88GB read
+Requests/sec:  12337.08
+Transfer/sec:     49.16MB
 ```
 ##### 4 потока, 4 соединения
 Длительность - 1 минута
@@ -231,16 +230,16 @@ Transfer/sec:     49.79MB
 Running 1m test @ http://localhost:8080
   4 threads and 4 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
-    Latency   149.58us   80.60us   4.32ms   97.07%
-    Req/Sec     6.44k   289.50     6.75k    91.22%
+    Latency   160.06us  101.43us   8.30ms   95.48%
+    Req/Sec     6.05k   361.45     6.40k    94.97%
   Latency Distribution
-     50%  140.00us
-     75%  151.00us
-     90%  176.00us
-     99%  399.00us
-  1540263 requests in 1.00m, 5.99GB read
-Requests/sec:  25628.48
-Transfer/sec:    102.12MB
+     50%  141.00us
+     75%  168.00us
+     90%  200.00us
+     99%  504.00us
+  1446028 requests in 1.00m, 5.63GB read
+Requests/sec:  24060.68
+Transfer/sec:     95.87MB
 ```
 ### Смесь PUT/GET 50/50 без перезаписи
 ##### 1 поток, 1 соединение

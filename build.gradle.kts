@@ -14,6 +14,9 @@ dependencies {
     // Annotations for better code documentation
     compile("com.intellij:annotations:12.0")
 
+    // Guava for cache
+    compile("com.google.guava:guava:23.6-jre")
+
     // JUnit test framework
     testCompile("junit:junit:4.12")
 

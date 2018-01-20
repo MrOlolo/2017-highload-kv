@@ -24,8 +24,7 @@ Transfer/sec:     17.33KB
 
 Длительность - 20 минут
 ```
- wrk --latency -t1 -c1 -d20m -s put.lua h
-ttp://localhost:8080
+ wrk --latency -t1 -c1 -d20m -s put.lua http://localhost:8080
 Running 20m test @ http://localhost:8080
   1 threads and 1 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev
@@ -117,8 +116,7 @@ Transfer/sec:     14.37MB
 ##### 4 потока, 4 соединения
 Длительность - 1 минута
 ```
- wrk --latency -t4 -c4 -d1m -s get.lua ht
-tp://localhost:8080
+ wrk --latency -t4 -c4 -d1m -s get.lua http://localhost:8080
 Running 1m test @ http://localhost:8080
   4 threads and 4 connections
   Thread Stats   Avg      Stdev     Max   +/- Stdev

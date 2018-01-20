@@ -1,11 +1,11 @@
 package ru.mail.polis.ReleaseService;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.nio.file.*;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
@@ -15,13 +15,13 @@ public class MyFileDAO implements MyDAO {
     @NotNull
     private final File dir;
 
-    private final Map<String, byte[]> cache;
-
-    private final static int SIZE = 2000;
+    private final Cache<String, byte[]> cache;
 
     public MyFileDAO(@NotNull final File dir) {
         this.dir = dir;
-        cache = new HashMap<>(SIZE);
+        cache = CacheBuilder.newBuilder()
+                .maximumSize(2000)
+                .build();
     }
 
     @NotNull
@@ -31,9 +31,10 @@ public class MyFileDAO implements MyDAO {
 
     @NotNull
     @Override
-    public byte[] get(@NotNull final String key) throws NoSuchElementException, IllegalArgumentException, IOException {
-        if (cache.containsKey(key)) {
-            return cache.get(key);
+    public byte[] get(@NotNull final String key) throws IllegalArgumentException, IOException {
+        byte[] value = cache.getIfPresent(key);
+        if (value != null) {
+            return value;
         }
 
         final Path path = Paths.get(dir.toString(), key);
@@ -41,10 +42,7 @@ public class MyFileDAO implements MyDAO {
             throw new NoSuchElementException();
         }
 
-        final byte[] value = Files.readAllBytes(path);
-        if (cache.size() == SIZE) {
-            cache.remove(cache.keySet().iterator().next());
-        }
+        value = Files.readAllBytes(path);
         cache.put(key, value);
         return value;
     }
@@ -54,13 +52,13 @@ public class MyFileDAO implements MyDAO {
         try (OutputStream os = new FileOutputStream(getFile(key))) {
             os.write(value);
         }
-        cache.remove(key);
+        cache.invalidate(key);
     }
 
     @Override
     public void delete(@NotNull final String key) throws IllegalArgumentException, IOException {
         getFile(key).delete();
-        cache.remove(key);
+        cache.invalidate(key);
     }
 
 }
