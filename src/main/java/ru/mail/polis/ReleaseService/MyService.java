@@ -3,6 +3,7 @@ package ru.mail.polis.ReleaseService;
 import com.sun.net.httpserver.HttpServer;
 import org.jetbrains.annotations.NotNull;
 import ru.mail.polis.KVService;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -77,7 +78,7 @@ public class MyService implements KVService {
                                 InputStream is = httpExchange.getRequestBody();
                                 byte[] buffer = new byte[4096];
                                 int len;
-                                while((len = is.read(buffer))>0) {
+                                while ((len = is.read(buffer)) > 0) {
                                     os.write(buffer, 0, len);
                                 }
                                 final byte[] putValue = os.toByteArray();
@@ -91,7 +92,7 @@ public class MyService implements KVService {
                         }
 
                     } catch (Exception e) {
-                       // e.printStackTrace();
+                        // e.printStackTrace();
                         httpExchange.sendResponseHeaders(HTTP_NOT_FOUND, 0);
 
                     } finally {
